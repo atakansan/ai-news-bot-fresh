@@ -566,7 +566,7 @@ class EnhancedAINewsBot {
     
     <div style="background: #667eea; color: white; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
       <h3 style="margin: 0;">📊 Today's Summary</h3>
-      <p style="margin: 10px 0 0 0;">Found <strong>${this.allNews.length} AI news</strong> from 🇺🇸 🇫🇷 🇩🇪 🇹🇷 🇳🇱</p>
+      <p style="margin: 10px 0 0 0;">Found <strong>${this.allNews.length} AI news</strong> from 🇺🇸 🇫🇷 🇩🇪 🇹🇷 🇳🇱 (v${Date.now()})</p>
     </div>
     
     <div style="margin: 30px 0;">
