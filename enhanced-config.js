@@ -142,7 +142,7 @@ module.exports = {
   belgianSites: [
     {
       name: 'RTBF Info',
-      url: 'https://www.rtbf.be/actu',
+      url: 'https://www.rtbf.be/info',
       titleSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, [data-testid="article-title"] a',
       linkSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, [data-testid="article-title"] a',
       priority: 'medium',  
