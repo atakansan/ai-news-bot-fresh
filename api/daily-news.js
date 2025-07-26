@@ -1,4 +1,6 @@
 // api/daily-news.js - Daily AI News at 5:00 AM & 5:00 PM CET
+// Clear cache to force reload
+delete require.cache[require.resolve('../enhanced-bot.js')];
 const { EnhancedAINewsBot } = require('../enhanced-bot.js');
 
 export default async function handler(req, res) {
