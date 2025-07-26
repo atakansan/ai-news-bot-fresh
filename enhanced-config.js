@@ -137,6 +137,28 @@ module.exports = {
       language: 'de'
     }
   ],
+
+  // Belgian News Sites - Bonus Section
+  belgianSites: [
+    {
+      name: 'RTBF Info',
+      url: 'https://www.rtbf.be/actu',
+      titleSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, [data-testid="article-title"] a',
+      linkSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, [data-testid="article-title"] a',
+      priority: 'medium',  
+      category: 'belgian',
+      language: 'fr'
+    },
+    {
+      name: 'VRT NWS',
+      url: 'https://www.vrt.be/vrtnws/nl/',
+      titleSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, .article-title a',
+      linkSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, .article-title a',
+      priority: 'medium',
+      category: 'belgian',
+      language: 'nl'
+    }
+  ],
   
   // Gelişmiş AI Anahtar Kelimeler
   aiKeywords: {
@@ -168,6 +190,7 @@ module.exports = {
     waitTime: 8000,
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     maxArticlesPerSite: 8,
+    maxBelgianArticlesPerSite: 4, // Belgian sites limit
     minTitleLength: 20,
     maxTitleLength: 200
   },

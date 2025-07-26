@@ -14,6 +14,7 @@ const config = require('./enhanced-config.js');
 class EnhancedAINewsBot {
   constructor() {
     this.allNews = [];
+    this.belgianNews = []; // Belgian news separate array
     this.analytics = {
       totalArticles: 0,
       successfulScrapes: 0,
@@ -36,12 +37,13 @@ class EnhancedAINewsBot {
 
     try {
       await this.scrapeAllSites();
+      await this.scrapeBelgianSites(); // Add Belgian news scraping
       await this.processAndAnalyze();
       await this.sendEnhancedEmail();
       await this.saveRunDate();
       
       console.log('✅ Bot başarıyla tamamlandı!');
-      console.log(`📊 Toplam ${this.allNews.length} haber bulundu`);
+      console.log(`📊 Toplam ${this.allNews.length} AI haber + ${this.belgianNews.length} Belçika haber bulundu`);
       
     } catch (error) {
       console.error('❌ Bot hatası:', error);
@@ -83,13 +85,28 @@ class EnhancedAINewsBot {
   }
 
   async scrapeAllSites() {
-    console.log('🌐 Haber sitelerini tarayıp analiz ediliyor...');
+    console.log('🌐 AI Haber sitelerini tarayıp analiz ediliyor...');
     
     const sitesToScrape = process.env.TEST_MODE ? config.sites.slice(0, 2) : config.sites;
     
     for (const site of sitesToScrape) {
       console.log(`📄 ${site.name} taranıyor...`);
       await this.scrapeSiteWithRetry(site);
+      
+      // Siteler arası bekleme
+      const delay = process.env.TEST_MODE ? 1000 : config.scraping.retryDelay;
+      await this.sleep(delay);
+    }
+  }
+
+  async scrapeBelgianSites() {
+    console.log('🇧🇪 Belçika haber sitelerini taranıyor...');
+    
+    const belgianSites = process.env.TEST_MODE ? config.belgianSites.slice(0, 2) : config.belgianSites;
+    
+    for (const site of belgianSites) {
+      console.log(`📄 ${site.name} (Belçika) taranıyor...`);
+      await this.scrapeBelgianSiteWithRetry(site);
       
       // Siteler arası bekleme
       const delay = process.env.TEST_MODE ? 1000 : config.scraping.retryDelay;
@@ -193,6 +210,99 @@ class EnhancedAINewsBot {
         console.log(`🔄 ${site.name} yeniden deneniyor... (${retryCount + 1}/${config.scraping.maxRetries})`);
         await this.sleep(config.scraping.retryDelay);
         return this.scrapeSiteWithRetry(site, retryCount + 1);
+      }
+    }
+  }
+
+  async scrapeBelgianSiteWithRetry(site, retryCount = 0) {
+    try {
+      // Axios ile HTML içeriğini al
+      const response = await axios.get(site.url, {
+        timeout: config.scraping.timeout,
+        headers: {
+          'User-Agent': config.scraping.userAgent,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'fr-BE,fr;q=0.9,nl-BE,nl;q=0.8,en;q=0.7',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'DNT': '1',
+          'Connection': 'keep-alive',
+          'Upgrade-Insecure-Requests': '1'
+        }
+      });
+
+      // Cheerio ile HTML'i parse et
+      const $ = cheerio.load(response.data);
+      const articles = [];
+
+      // Başlık ve link elementlerini al
+      const titleElements = $(site.titleSelector);
+      const linkElements = $(site.linkSelector);
+
+      // Her bir elementi işle
+      titleElements.each((index, titleEl) => {
+        if (index >= config.scraping.maxBelgianArticlesPerSite) return false; // Limit'e ulaştıysa dur
+        
+        const title = $(titleEl).text().trim();
+        
+        // Link elementi - önce aynı index'teki link'i dene
+        let link = '';
+        if (index < linkElements.length) {
+          const linkEl = linkElements.eq(index);
+          link = linkEl.attr('href') || linkEl.find('a').first().attr('href') || '';
+        }
+        
+        // Eğer link bulunamadıysa, title elementi içinde ara
+        if (!link) {
+          link = $(titleEl).find('a').first().attr('href') || 
+                 $(titleEl).closest('a').attr('href') || 
+                 $(titleEl).parent().find('a').first().attr('href') || '';
+        }
+        
+        // Link'i tam URL'e çevir
+        if (link && !link.startsWith('http')) {
+          try {
+            link = new URL(link, site.url).href;
+          } catch (e) {
+            link = '';
+          }
+        }
+        
+        // Geçerli haber kontrolü (AI keyword kontrolü yok, tüm haberler)
+        if (title && link && 
+            title.length >= config.scraping.minTitleLength && 
+            title.length <= config.scraping.maxTitleLength) {
+          
+          articles.push({
+            title,
+            link,
+            timestamp: new Date().toISOString()
+          });
+        }
+      });
+
+      // Siteye özgü bilgiler ekle
+      const enhancedNews = articles.slice(0, config.scraping.maxBelgianArticlesPerSite).map(article => ({
+        ...article,
+        source: site.name,
+        category: site.category,
+        priority: site.priority,
+        language: site.language,
+        scrapedAt: new Date().toISOString()
+      }));
+
+      this.belgianNews.push(...enhancedNews);
+      this.analytics.successfulScrapes++;
+      
+      console.log(`✅ ${site.name} (Belçika): ${enhancedNews.length} haber bulundu`);
+
+    } catch (error) {
+      console.error(`❌ ${site.name} (Belçika) hatası:`, error.message);
+      this.analytics.failedScrapes++;
+      
+      if (retryCount < config.scraping.maxRetries) {
+        console.log(`🔄 ${site.name} (Belçika) yeniden deneniyor... (${retryCount + 1}/${config.scraping.maxRetries})`);
+        await this.sleep(config.scraping.retryDelay);
+        return this.scrapeBelgianSiteWithRetry(site, retryCount + 1);
       }
     }
   }
@@ -463,6 +573,8 @@ class EnhancedAINewsBot {
       ${this.generateSimpleNewsList()}
     </div>
     
+    ${this.belgianNews.length > 0 ? this.generateBelgianNewsSection() : ''}
+    
     <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; color: #666; font-size: 14px;">
       🤖 AI News Bot v3.0 | Runtime: ${Math.round((Date.now() - this.startTime) / 1000)}s<br>
       ${new Date().toLocaleString('en-US')}<br><br>
@@ -498,6 +610,57 @@ class EnhancedAINewsBot {
               </div>
               <div style="font-size: 12px; color: #666;">
                 ${this.getCountryFlag(news.source)} <strong>${news.source}</strong> | ${news.category} | ⭐ ${news.priority}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }).filter(html => html !== '').join('');
+  }
+
+  generateBelgianNewsSection() {
+    if (this.belgianNews.length === 0) return '';
+    
+    return `
+      <div style="margin: 40px 0; border-top: 3px solid #667eea; padding-top: 30px;">
+        <h3 style="color: #667eea; text-align: center; margin-bottom: 20px; font-size: 24px;">
+          🇧🇪 News in Belgium 🇧🇪
+        </h3>
+        <div style="background: #f0f4ff; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+          <p style="margin: 0; color: #666; font-size: 16px;">
+            Latest news from Belgian sources (${this.belgianNews.length} articles)
+          </p>
+        </div>
+        
+        ${this.generateBelgianNewsByLanguage()}
+      </div>
+    `;
+  }
+
+  generateBelgianNewsByLanguage() {
+    const languages = ['fr', 'nl'];
+    const languageInfo = {
+      'fr': { name: 'French', flag: '🇫🇷', emoji: '📰' },
+      'nl': { name: 'Dutch', flag: '🇳🇱', emoji: '📰' }
+    };
+
+    return languages.map(language => {
+      const languageNews = this.belgianNews.filter(news => news.language === language);
+      if (languageNews.length === 0) return '';
+      
+      const langInfo = languageInfo[language];
+      return `
+        <div style="margin-bottom: 25px;">
+          <h4 style="color: #667eea; border-bottom: 1px solid #667eea; padding-bottom: 8px; margin-bottom: 15px;">
+            ${langInfo.flag} ${langInfo.name} ${langInfo.emoji} (${languageNews.length})
+          </h4>
+          ${languageNews.map((news, index) => `
+            <div style="background: #fff; padding: 12px; margin: 8px 0; border-radius: 6px; border-left: 3px solid #667eea; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+              <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">
+                <a href="${news.link}" target="_blank" style="color: #333; text-decoration: none;">${news.title}</a>
+              </div>
+              <div style="font-size: 11px; color: #666;">
+                🏢 <strong>${news.source}</strong> | ${new Date(news.timestamp).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})}
               </div>
             </div>
           `).join('')}
