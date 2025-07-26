@@ -1,5 +1,7 @@
 // api/daily-news.js - Daily AI News at 5:00 AM & 5:00 PM CET
-// Clear cache to force reload
+// Force fresh import with timestamp
+const timestamp = Date.now();
+console.log('🔄 Loading enhanced-bot.js at:', timestamp);
 delete require.cache[require.resolve('../enhanced-bot.js')];
 const { EnhancedAINewsBot } = require('../enhanced-bot.js');
 
