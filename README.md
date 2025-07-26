@@ -15,3 +15,4 @@ AI haberlerini toplar ve email gönderir.
 
 Boom SCHAKALA! 🚀// Fresh deployment Tue 22 Jul 2025 09:47:21 CEST
 # Force deploy Sat 26 Jul 2025 10:10:31 CEST
+# Emergency deployment Sat 26 Jul 2025 19:30:00 CEST - Fix flags production issue
