@@ -37,13 +37,13 @@ class EnhancedAINewsBot {
 
     try {
       await this.scrapeAllSites();
-      await this.scrapeBelgianSites(); // Add Belgian news scraping
+      // Belgian news scraping removed for stability
       await this.processAndAnalyze();
       await this.sendEnhancedEmail();
       await this.saveRunDate();
       
       console.log('✅ Bot başarıyla tamamlandı!');
-      console.log(`📊 Toplam ${this.allNews.length} AI haber + ${this.belgianNews.length} Belçika haber bulundu`);
+      console.log(`📊 Toplam ${this.allNews.length} AI haber bulundu`);
       
     } catch (error) {
       console.error('❌ Bot hatası:', error);
@@ -573,7 +573,7 @@ class EnhancedAINewsBot {
       ${this.generateSimpleNewsList()}
     </div>
     
-    ${this.belgianNews.length > 0 ? this.generateBelgianNewsSection() : ''}
+    <!-- Belgian news section removed for stability -->
     
     <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; color: #666; font-size: 14px;">
       🤖 AI News Bot v3.0 | Runtime: ${Math.round((Date.now() - this.startTime) / 1000)}s<br>

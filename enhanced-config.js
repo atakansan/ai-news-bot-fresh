@@ -141,22 +141,13 @@ module.exports = {
   // Belgian News Sites - Bonus Section
   belgianSites: [
     {
-      name: 'RTBF Info',
-      url: 'https://www.rtbf.be/info',
-      titleSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, [data-testid="article-title"] a',
-      linkSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, [data-testid="article-title"] a',
-      priority: 'medium',  
+      name: 'Brussels Times',
+      url: 'https://www.brusselstimes.com/',
+      titleSelector: 'h1 a, h2 a, h3 a, .entry-title a, .article-title a, .headline a',
+      linkSelector: 'h1 a, h2 a, h3 a, .entry-title a, .article-title a, .headline a',
+      priority: 'high',  
       category: 'belgian',
-      language: 'fr'
-    },
-    {
-      name: 'VRT NWS',
-      url: 'https://www.vrt.be/vrtnws/nl/',
-      titleSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, .article-title a',
-      linkSelector: 'h1 a, h2 a, h3 a, .title a, .headline a, .article-title a',
-      priority: 'medium',
-      category: 'belgian',
-      language: 'nl'
+      language: 'en'
     }
   ],
   
