@@ -128,15 +128,6 @@ module.exports = {
       language: 'nl'
     },
     {
-      name: 'Nederland.ai 🇳🇱',
-      url: 'https://nederland.ai',
-      titleSelector: 'h1 a, h2 a, h3 a, .article-title a, .post-title a, .entry-title a',
-      linkSelector: 'h1 a, h2 a, h3 a, .article-title a, .post-title a, .entry-title a',
-      priority: 'high',
-      category: 'global',
-      language: 'nl'
-    },
-    {
       name: 'NU.nl Tech 🇳🇱',
       url: 'https://www.nu.nl/tech',
       titleSelector: '.list-item__title a, .article__title a, h2 a, h3 a',
