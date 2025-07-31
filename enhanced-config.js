@@ -146,6 +146,15 @@ module.exports = {
       language: 'nl'
     },
     {
+      name: 'Tweakers.net AI 🇳🇱',
+      url: 'https://tweakers.net/tag/Kunstmatige%20intelligentie/',
+      titleSelector: '.contentBody h3 a, .articleTitle a, .newsTitle a, h2 a, h3 a',
+      linkSelector: '.contentBody h3 a, .articleTitle a, .newsTitle a, h2 a, h3 a',
+      priority: 'high',
+      category: 'global',
+      language: 'nl'
+    },
+    {
       name: 'All-AI.de 🇩🇪',
       url: 'https://all-ai.de',
       titleSelector: '.post-title a, .entry-title a, h2 a, h3 a, .article-title a',
