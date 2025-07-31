@@ -112,8 +112,8 @@ module.exports = {
     {
       name: 'Bright.nl AI 🇳🇱',
       url: 'https://www.bright.nl/onderwerpen/AI',
-      titleSelector: '.article-title a, .post-title a, h2 a, h3 a, .entry-title a',
-      linkSelector: '.article-title a, .post-title a, h2 a, h3 a, .entry-title a',
+      titleSelector: '.card__title a, .article-title a, .post-title a, h2 a, h3 a, .entry-title a',
+      linkSelector: '.card__title a, .article-title a, .post-title a, h2 a, h3 a, .entry-title a',
       priority: 'high',
       category: 'global',
       language: 'nl'
@@ -123,6 +123,24 @@ module.exports = {
       url: 'https://ai.headliner.nl',
       titleSelector: '.headline a, .post-title a, h2 a, h3 a, .article-title a',
       linkSelector: '.headline a, .post-title a, h2 a, h3 a, .article-title a',
+      priority: 'high',
+      category: 'global',
+      language: 'nl'
+    },
+    {
+      name: 'Nederland.ai 🇳🇱',
+      url: 'https://nederland.ai',
+      titleSelector: 'h1 a, h2 a, h3 a, .article-title a, .post-title a, .entry-title a',
+      linkSelector: 'h1 a, h2 a, h3 a, .article-title a, .post-title a, .entry-title a',
+      priority: 'high',
+      category: 'global',
+      language: 'nl'
+    },
+    {
+      name: 'NU.nl Tech 🇳🇱',
+      url: 'https://www.nu.nl/tech',
+      titleSelector: '.list-item__title a, .article__title a, h2 a, h3 a',
+      linkSelector: '.list-item__title a, .article__title a, h2 a, h3 a',
       priority: 'high',
       category: 'global',
       language: 'nl'
