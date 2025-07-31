@@ -557,34 +557,90 @@ class EnhancedAINewsBot {
       day: 'numeric' 
     });
 
-    // Simple email template that works with Yahoo
+    // Apple-style ultra-modern minimalist template
     return `
-<div style="font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5;">
-  <div style="background: white; padding: 30px; border-radius: 10px; max-width: 700px; margin: 0 auto;">
-    <h2 style="color: #333; text-align: center;">🤖 AI News Daily</h2>
-    <p style="text-align: center; color: #666;">${today}</p>
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif; padding: 0; margin: 0; background: #ffffff;">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <!-- Ultra-minimal header -->
+    <div style="padding: 60px 40px 40px; text-align: center; background: #000000;">
+      <div style="font-size: 48px; margin-bottom: 20px;">🤖</div>
+      <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -0.5px;">AI News Daily</h1>
+      <p style="color: #999999; margin: 12px 0 0 0; font-size: 16px; font-weight: 200;">${today}</p>
+      <p style="color: #666666; margin: 8px 0 0 0; font-size: 14px; font-weight: 200;">Belgium Edition</p>
+    </div>
     
-    <div style="background: #667eea; color: white; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-      <h3 style="margin: 0;">📊 Today's Summary</h3>
-      <p style="margin: 10px 0 0 0;">Found <strong>${this.allNews.length} AI news</strong> from 🇺🇸 🇫🇷 🇩🇪 🇹🇷 🇳🇱 (v${Date.now()})</p>
+    <!-- Minimal stats bar -->
+    <div style="background: #f5f5f7; padding: 32px 40px; border-bottom: 1px solid #e5e5e7;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+        <div style="text-align: center;">
+          <div style="font-size: 36px; font-weight: 600; color: #1d1d1f;">${this.allNews.length}</div>
+          <div style="font-size: 13px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Articles</div>
+        </div>
+        <div style="width: 1px; height: 40px; background: #d2d2d7;"></div>
+        <div style="text-align: center;">
+          <div style="font-size: 36px; font-weight: 600; color: #1d1d1f;">5</div>
+          <div style="font-size: 13px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Languages</div>
+        </div>
+        <div style="width: 1px; height: 40px; background: #d2d2d7;"></div>
+        <div style="text-align: center;">
+          <div style="font-size: 24px; line-height: 36px;">🇫🇷 🇬🇧 🇳🇱 🇩🇪 🇹🇷</div>
+          <div style="font-size: 13px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Coverage</div>
+        </div>
+      </div>
     </div>
     
     <div style="margin: 30px 0;">
       ${this.generateSimpleNewsList()}
-    </div>
-    
-    <!-- Belgian news section removed for stability -->
-    
-    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; color: #666; font-size: 14px;">
-      🤖 AI News Bot v3.0 | Runtime: ${Math.round((Date.now() - this.startTime) / 1000)}s<br>
-      ${new Date().toLocaleString('en-US')}<br><br>
-      📧 Contact <strong>atakansan2012@gmail.com</strong> for any suggestion.
+      </div>
+      
+      <!-- Belgian news section removed for stability -->
+      
+      <!-- Premium Footer -->
+      <div style="background: #000000; padding: 60px 40px; text-align: center; margin-top: 80px;">
+        <!-- Logo animation hint -->
+        <div style="margin-bottom: 24px;">
+          <div style="display: inline-block; position: relative;">
+            <div style="font-size: 48px; animation: pulse 2s ease-in-out infinite;">🤖</div>
+            <style>
+              @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.05); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
+              }
+            </style>
+          </div>
+        </div>
+        
+        <h3 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 300; color: #ffffff; letter-spacing: -0.5px;">AI News Daily</h3>
+        <p style="margin: 0 0 32px 0; color: #86868b; font-size: 16px; font-weight: 200;">Curated Intelligence from Belgium</p>
+        
+        <!-- Turquoise accent stats -->
+        <div style="display: inline-block; background: linear-gradient(135deg, #00D4FF 0%, #00A8CC 100%); padding: 20px 32px; border-radius: 24px; margin-bottom: 32px;">
+          <div style="display: flex; align-items: center; gap: 24px; color: white; font-size: 14px;">
+            <div>
+              <span style="font-weight: 600;">⚡</span> ${Math.round((Date.now() - this.startTime) / 1000)}s
+            </div>
+            <div style="width: 1px; height: 16px; background: rgba(255,255,255,0.3);"></div>
+            <div>
+              <span style="font-weight: 600;">📍</span> Belgium, CET
+            </div>
+            <div style="width: 1px; height: 16px; background: rgba(255,255,255,0.3);"></div>
+            <div>
+              <span style="font-weight: 600;">📅</span> ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            </div>
+          </div>
+        </div>
+        
+        <p style="margin: 0; color: #515154; font-size: 14px;">
+          Crafted with precision • <a href="mailto:atakansan2012@gmail.com" style="color: #00D4FF; text-decoration: none;">atakansan2012@gmail.com</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>`;
   }
   generateSimpleNewsList() {
-    const languages = ['en', 'fr', 'nl', 'de', 'tr'];
+    const languages = ['fr', 'en', 'nl', 'de', 'tr']; // Belgium priority: French first, then English
     const languageInfo = {
       'en': { name: 'English', flag: '🇺🇸', emoji: '🌍' },
       'fr': { name: 'Français', flag: '🇫🇷', emoji: '🥖' },
@@ -598,21 +654,103 @@ class EnhancedAINewsBot {
       if (languageNews.length === 0) return '';
       
       const langInfo = languageInfo[language];
+      // Apple-style minimalist approach
       return `
-        <div style="margin-bottom: 30px;">
-          <h3 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
-            ${langInfo.flag} ${langInfo.name} ${langInfo.emoji} (${languageNews.length})
-          </h3>
-          ${languageNews.map((news, index) => `
-            <div style="background: #f8f9ff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #667eea;">
-              <div style="font-weight: bold; margin-bottom: 8px;">
-                <a href="${news.link}" target="_blank" style="color: #333; text-decoration: none;">${news.title}</a>
+        <div style="padding: 0 40px; margin-bottom: 60px;">
+          <!-- Language section header - ultra clean -->
+          <div style="border-bottom: 1px solid #e5e5e7; padding-bottom: 16px; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <span style="font-size: 40px; line-height: 1;">${langInfo.flag}</span>
+                <h2 style="margin: 0; font-size: 28px; font-weight: 600; color: #1d1d1f; letter-spacing: -0.5px;">${langInfo.name}</h2>
               </div>
-              <div style="font-size: 12px; color: #666;">
-                ${this.getCountryFlag(news.source)} <strong>${news.source}</strong> | ${news.category} | ⭐ ${news.priority}
+              <div style="background: #000000; color: #ffffff; padding: 8px 16px; border-radius: 24px; font-size: 14px; font-weight: 500;">
+                ${languageNews.length} articles
               </div>
             </div>
-          `).join('')}
+          </div>
+          
+          <!-- News items - super clean cards -->
+          <div style="display: grid; gap: 16px;">
+            ${languageNews.slice(0, 8).map((news, index) => `
+              <div style="
+                background: linear-gradient(135deg, #ffffff 0%, #f8fffe 50%, #f0ffff 100%); 
+                padding: 24px; 
+                border-radius: 20px; 
+                border: 1px solid rgba(0, 212, 255, 0.08);
+                box-shadow: 0 4px 24px rgba(0, 212, 255, 0.05);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
+              ">
+                <!-- Subtle gradient overlay -->
+                <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00D4FF, transparent); opacity: 0.3;"></div>
+                
+                <div style="margin-bottom: 16px;">
+                  <a href="${news.link}" target="_blank" style="color: #1d1d1f; text-decoration: none; display: block;">
+                    <h3 style="
+                      margin: 0; 
+                      font-size: 19px; 
+                      font-weight: 600; 
+                      line-height: 1.35; 
+                      letter-spacing: -0.4px;
+                      background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                      background-clip: text;
+                    ">
+                      ${news.title}
+                    </h3>
+                  </a>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 16px; font-size: 13px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px; filter: brightness(1.1);">${this.getCountryFlag(news.source)}</span>
+                    <span style="color: #1d1d1f; font-weight: 600;">${news.source}</span>
+                  </div>
+                  
+                  <div style="width: 3px; height: 3px; background: #00D4FF; border-radius: 50%; opacity: 0.6;"></div>
+                  
+                  <span style="
+                    background: linear-gradient(135deg, #00D4FF, #00A8CC); 
+                    color: white; 
+                    padding: 6px 14px; 
+                    border-radius: 16px; 
+                    font-size: 11px; 
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                  ">
+                    ${news.category}
+                  </span>
+                  
+                  <div style="margin-left: auto; display: flex; align-items: center; gap: 6px;">
+                    <div style="
+                      width: 24px; 
+                      height: 24px; 
+                      background: linear-gradient(135deg, #00D4FF, #00A8CC); 
+                      border-radius: 50%; 
+                      display: flex; 
+                      align-items: center; 
+                      justify-content: center;
+                    ">
+                      <span style="color: white; font-size: 10px; font-weight: 700;">${news.aiScore || news.priority}</span>
+                    </div>
+                    <span style="color: #86868b; font-size: 11px; font-weight: 500;">AI Score</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          
+          ${languageNews.length > 8 ? `
+            <div style="text-align: center; margin-top: 24px;">
+              <span style="color: #86868b; font-size: 14px;">
+                +${languageNews.length - 8} more articles
+              </span>
+            </div>
+          ` : ''}
         </div>
       `;
     }).filter(html => html !== '').join('');
