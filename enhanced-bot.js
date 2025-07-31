@@ -561,12 +561,19 @@ class EnhancedAINewsBot {
     return `
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif; padding: 0; margin: 0; background: #ffffff;">
   <div style="max-width: 680px; margin: 0 auto;">
-    <!-- Ultra-minimal header -->
-    <div style="padding: 60px 40px 40px; text-align: center; background: #000000;">
-      <div style="font-size: 48px; margin-bottom: 20px;">🤖</div>
-      <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -0.5px;">AI News Daily</h1>
-      <p style="color: #999999; margin: 12px 0 0 0; font-size: 16px; font-weight: 200;">${today}</p>
-      <p style="color: #666666; margin: 8px 0 0 0; font-size: 14px; font-weight: 200;">Belgium Edition</p>
+    <!-- Ultra-minimal header with turquoise background -->
+    <div style="padding: 60px 40px 40px; text-align: center; background: linear-gradient(135deg, #40E0D0 0%, #48CAE4 100%);">
+      <div style="font-size: 48px; margin-bottom: 20px; animation: robotBounce 2s ease-in-out infinite;">🤖</div>
+      <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">✨ AI News Daily ✨</h1>
+      <p style="color: rgba(255,255,255,0.9); margin: 12px 0 0 0; font-size: 16px; font-weight: 200; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">📅 ${today}</p>
+      <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0 0; font-size: 14px; font-weight: 200; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">🇧🇪 Belgium Edition 🇧🇪</p>
+      <style>
+        @keyframes robotBounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-10px); }
+          60% { transform: translateY(-5px); }
+        }
+      </style>
     </div>
     
     <!-- Minimal stats bar -->
@@ -642,11 +649,11 @@ class EnhancedAINewsBot {
   generateSimpleNewsList() {
     const languages = ['fr', 'en', 'nl', 'de', 'tr']; // Belgium priority: French first, then English
     const languageInfo = {
-      'en': { name: 'English', flag: '🇺🇸', emoji: '🌍' },
-      'fr': { name: 'Français', flag: '🇫🇷', emoji: '🥖' },
-      'nl': { name: 'Nederlands', flag: '🇳🇱', emoji: '🌷' },
-      'de': { name: 'Deutsch', flag: '🇩🇪', emoji: '🍺' },
-      'tr': { name: 'Türkçe', flag: '🇹🇷', emoji: '🧿' }
+      'en': { name: '🌍 English News', flag: '🇺🇸', emoji: '📈' },
+      'fr': { name: '🥖 Actualités Françaises', flag: '🇫🇷', emoji: '💡' },
+      'nl': { name: '🌷 Nederlands Nieuws', flag: '🇳🇱', emoji: '🚀' },
+      'de': { name: '🍺 Deutsche Nachrichten', flag: '🇩🇪', emoji: '⚡' },
+      'tr': { name: '🧿 Türkçe Haberler', flag: '🇹🇷', emoji: '🎯' }
     };
 
     return languages.map(language => {
@@ -687,7 +694,14 @@ class EnhancedAINewsBot {
                 <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00D4FF, transparent); opacity: 0.3;"></div>
                 
                 <div style="margin-bottom: 16px;">
-                  <a href="${news.link}" target="_blank" style="color: #1d1d1f; text-decoration: none; display: block;">
+                  <a href="${news.link}" target="_blank" style="
+                    color: #1d1d1f; 
+                    text-decoration: none; 
+                    display: block;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                  " 
+                  onmouseover="this.style.transform='translateX(8px)'; this.style.color='#40E0D0';" 
+                  onmouseout="this.style.transform='translateX(0)'; this.style.color='#1d1d1f';">
                     <h3 style="
                       margin: 0; 
                       font-size: 19px; 
@@ -698,46 +712,17 @@ class EnhancedAINewsBot {
                       -webkit-background-clip: text;
                       -webkit-text-fill-color: transparent;
                       background-clip: text;
+                      transition: all 0.3s ease;
                     ">
-                      ${news.title}
+                      📰 ${news.title}
                     </h3>
                   </a>
                 </div>
                 
-                <div style="display: flex; align-items: center; gap: 16px; font-size: 13px;">
+                <div style="display: flex; align-items: center; gap: 12px; font-size: 14px;">
                   <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 18px; filter: brightness(1.1);">${this.getCountryFlag(news.source)}</span>
-                    <span style="color: #1d1d1f; font-weight: 600;">${news.source}</span>
-                  </div>
-                  
-                  <div style="width: 3px; height: 3px; background: #00D4FF; border-radius: 50%; opacity: 0.6;"></div>
-                  
-                  <span style="
-                    background: linear-gradient(135deg, #00D4FF, #00A8CC); 
-                    color: white; 
-                    padding: 6px 14px; 
-                    border-radius: 16px; 
-                    font-size: 11px; 
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                  ">
-                    ${news.category}
-                  </span>
-                  
-                  <div style="margin-left: auto; display: flex; align-items: center; gap: 6px;">
-                    <div style="
-                      width: 24px; 
-                      height: 24px; 
-                      background: linear-gradient(135deg, #00D4FF, #00A8CC); 
-                      border-radius: 50%; 
-                      display: flex; 
-                      align-items: center; 
-                      justify-content: center;
-                    ">
-                      <span style="color: white; font-size: 10px; font-weight: 700;">${news.aiScore || news.priority}</span>
-                    </div>
-                    <span style="color: #86868b; font-size: 11px; font-weight: 500;">AI Score</span>
+                    <span style="font-size: 20px; filter: brightness(1.1);">${this.getCountryFlag(news.source)}</span>
+                    <span style="color: #1d1d1f; font-weight: 500;">📡 ${news.source}</span>
                   </div>
                 </div>
               </div>
