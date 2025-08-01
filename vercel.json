@@ -9,5 +9,6 @@
       "path": "/api/daily-news",
       "schedule": "0 4 * * *"
     }
-  ]
+  ],
+  "public": true
 }
