@@ -6,12 +6,26 @@ AI haberlerini toplar ve email gönderir.
 - Türkçe ve İngilizce AI haber siteleri
 - Otomatik email gönderimi
 - Vercel'de çalışır
-- Her sabah 5'te otomatik çalışır
+- Her sabah 5'te otomatik çalışır (Belçika saati)
 
-## Kurulum
-1. Vercel'e deploy et
-2. Environment variables ekle
-3. Cron job otomatik çalışacak
+## 🚀 Vercel Kurulum
+
+### 1. Environment Variables (Zorunlu)
+Vercel Dashboard > Settings > Environment Variables:
+- `EMAIL_USER` - Gmail adresiniz
+- `EMAIL_PASS` - Gmail uygulama şifreniz
+
+### 2. Güvenlik Ayarları (Önemli!)
+Settings > Security:
+- "Vercel Authentication" → **Disable**
+- "Password Protection" → **Disable**
+
+### 3. Test Endpoint'leri
+- `/api/test` - Deployment kontrolü (GET)
+- `/api/trigger` - Manuel bot tetikleme (POST)
+
+### 4. Cron Schedule
+- Her gün sabah 5:00 Belçika saati (UTC 4:00 kış, UTC 3:00 yaz)
 
 Boom SCHAKALA! 🚀// Fresh deployment Tue 22 Jul 2025 09:47:21 CEST
 # Force deploy Sat 26 Jul 2025 10:10:31 CEST
